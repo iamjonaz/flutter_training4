@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'widgets/profile_avatar.dart';
 import 'widgets/profile_info.dart';
 import 'widgets/profile_stats.dart';
+import 'widgets/experience_card.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -49,16 +50,7 @@ class ProfilePage extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 itemCount: experiences.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 2,
-                    margin: const EdgeInsets.symmetric(vertical: 6),
-                    child: ListTile(
-                      leading: const Icon(Icons.work, color: Colors.blueAccent),
-                      title: Text(experiences[index]),
-                    ),
-                  );
-                },
+                itemBuilder: (context, index) => ExperienceCard(title: experiences[index]),
               ),
             ),
           ],
