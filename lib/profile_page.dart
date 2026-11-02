@@ -14,12 +14,59 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String _userName = 'Arjuna Meiureksa';
   final String _role = 'Mahasiswa Teknik Informatika';
+  final TextEditingController _nameController = TextEditingController();
 
   static const List<String> _experiences = [
     'Mempelajari dasar Flutter dan Dart',
     'Membangun antarmuka aplikasi mobile',
     'Mengelola project menggunakan Git dan GitHub',
   ];
+
+  void _showEditDialog() {
+    _nameController.text = _userName;
+
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Edit Profil'),
+          content: TextFormField(
+            controller: _nameController,
+            autofocus: true,
+            decoration: const InputDecoration(
+              labelText: 'Nama',
+              hintText: 'Masukkan nama baru',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final newName = _nameController.text.trim();
+                if (newName.isNotEmpty) {
+                  setState(() {
+                    _userName = newName;
+                  });
+                }
+                Navigator.of(dialogContext).pop();
+              },
+              child: const Text('Simpan'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ProfileInfo(name: _userName, role: _role),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Fitur edit belum aktif.')),
-                );
-              },
+              onPressed: _showEditDialog,
               icon: const Icon(Icons.edit),
               label: const Text('Edit Profil'),
             ),
