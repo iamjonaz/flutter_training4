@@ -4,10 +4,18 @@ import 'widgets/profile_info.dart';
 import 'widgets/profile_stats.dart';
 import 'widgets/experience_card.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
-  static const List<String> experiences = [
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String _userName = 'Arjuna Meiureksa';
+  final String _role = 'Mahasiswa Teknik Informatika';
+
+  static const List<String> _experiences = [
     'Mempelajari dasar Flutter dan Dart',
     'Membangun antarmuka aplikasi mobile',
     'Mengelola project menggunakan Git dan GitHub',
@@ -28,7 +36,7 @@ class ProfilePage extends StatelessWidget {
           children: [
             const ProfileAvatar(),
             const SizedBox(height: 12),
-            const ProfileInfo(name: 'Arjuna Meiureksa', role: 'Mahasiswa Teknik Informatika'),
+            ProfileInfo(name: _userName, role: _role),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: () {
@@ -49,8 +57,8 @@ class ProfilePage extends StatelessWidget {
             const Divider(),
             Expanded(
               child: ListView.builder(
-                itemCount: experiences.length,
-                itemBuilder: (context, index) => ExperienceCard(title: experiences[index]),
+                itemCount: _experiences.length,
+                itemBuilder: (context, index) => ExperienceCard(title: _experiences[index]),
               ),
             ),
           ],
